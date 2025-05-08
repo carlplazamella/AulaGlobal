@@ -1,0 +1,7 @@
+{
+  "name": "aula-global",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
