@@ -1,0 +1,106 @@
+:host {
+  ion-content {
+    --background: #ffffff;
+    padding: 16px;
+    position: relative;
+  }
+}
+
+/* Botón cerrar flotante */
+.boton-cerrar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-principal);
+  --background: transparent;
+  --box-shadow: none;
+}
+
+/* Degradado en el botón de guardar */
+.btn-degradado {
+  --border-radius: 12px;
+  --background: linear-gradient(135deg, var(--color-principal), var(--color-principal-2));
+  --color: white;
+  font-weight: 600;
+  text-transform: none;
+  margin-top: 16px;
+}
+
+/* Espacio para el X de cerrar */
+ion-list {
+  margin-top: 48px;
+}
+
+/* Estilo general de los items */
+ion-item {
+  --background: #f8f8ff;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 0 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+ion-label {
+  color: var(--color-principal);
+  font-weight: 500;
+}
+
+ion-select.mi-dropdown,
+ion-input,
+ion-textarea {
+  font-size: 15px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  border-radius: 8px;
+}
+
+ion-textarea {
+  min-height: 100px;
+}
+
+ion-text[color="danger"] {
+  font-weight: 600;
+  color: #d61c1c;
+  margin-bottom: 8px;
+}
+
+.mi-popover-select {
+  --width: 260px;
+  --min-height: 200px;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+
+  .select-interface-popover {
+    border-radius: inherit;
+  }
+
+  ion-item {
+    --background: transparent;
+    padding: 8px 16px;
+    border-bottom: 1px solid #eee;
+  }
+
+  ion-item:last-child {
+    border-bottom: none;
+  }
+
+  ion-item:hover {
+    background: rgba(165, 214, 167, 0.2); 
+  }
+
+  ion-label {
+    color: var(--color-principal);
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 360px) {
+  ion-content { padding: 12px; }
+  .boton-cerrar { top: 8px; right: 8px; font-size: 22px; }
+  ion-item { margin-bottom: 10px; }
+  .btn-degradado { font-size: 14px; }
+}

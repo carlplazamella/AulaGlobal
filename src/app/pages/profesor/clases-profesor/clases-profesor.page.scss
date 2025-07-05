@@ -1,0 +1,68 @@
+
+.titulo-motivador {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-principal);
+  margin-bottom: 18px;
+}
+
+.card-clase-profesor {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  background-color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.icono-titulo {
+  margin-right: 8px;
+  font-size: 20px;
+  color: var(--color-principal);
+}
+
+.detalle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #555;
+}
+.detalle ion-icon {
+  margin-right: 6px;
+  font-size: 18px;
+  color: var(--color-principal);
+}
+
+.btn-degradado {
+  display: block;
+  width: 70%;
+  max-width: 220px;  
+  margin: 0 auto;   
+  --background: linear-gradient(to right, var(--color-principal), #A5D6A7);
+  --color: #fff;
+  --border-radius: 14px;
+  padding: 0 18px;
+}
+
+.clickable-text {
+  background: none !important;
+  --background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+
+  color: var(--color-principal) !important;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}

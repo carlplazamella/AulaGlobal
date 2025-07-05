@@ -1,0 +1,52 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Reservar Clase</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="boton-cerrar" (click)="cerrarModal()">
+        Cerrar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fondo-modal ion-padding">
+  <div class="mockup">
+    <div class="body">
+      <div class="titulo-motivador">Elige tu día de clase</div>
+
+      <div class="field">
+        <label>Seleccionar día</label>
+        <ion-item lines="none" class="selector">
+          <ion-datetime
+            [firstDayOfWeek]="1"
+            [min]="diasDisponibles[0]"
+            [max]="diasDisponibles[diasDisponibles.length - 1]"
+            [isDateEnabled]="isDateEnabled"
+            [value]="fechaSeleccionada"
+            presentation="date"
+            (ionChange)="seleccionarFecha($event)"
+          ></ion-datetime>
+        </ion-item>
+      </div>
+
+      <div *ngIf="fechaSeleccionada" class="horas">
+        <h3>Horas disponibles</h3>
+        <ul>
+          <li *ngFor="let hora of horasDisponibles">
+            <span>{{ hora.hora_inicio.slice(0,5) }} – {{ hora.hora_fin.slice(0,5) }}</span>
+            <button class="boton-reservar" (click)="reservarClase(hora)">
+              Reservar
+            </button>
+          </li>
+          <li *ngIf="horasDisponibles.length === 0" class="mensaje-vacio">
+            No hay bloques disponibles este día.
+          </li>
+        </ul>
+      </div>
+
+      <ion-item *ngIf="mensajeConfirmacion" lines="none">
+        <ion-label color="success">{{ mensajeConfirmacion }}</ion-label>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

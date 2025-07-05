@@ -1,0 +1,84 @@
+<ion-content class="ion-padding">
+
+  <!-- Título -->
+  <h2 class="main-title">Mis Pagos y Retiros</h2>
+
+  <!-- Balance -->
+  <div class="balance ion-margin-bottom">
+    <strong>Monto disponible:</strong>
+    <span>${{ balance | number:'1.0-0' }}</span>
+  </div>
+
+  <!-- Segmento -->
+  <ion-segment [(ngModel)]="tab" class="ion-margin-vertical">
+    <ion-segment-button value="pagos">Pagos</ion-segment-button>
+    <ion-segment-button value="retiros">Retiros</ion-segment-button>
+  </ion-segment>
+
+  <!-- Pagos con paginación -->
+  <ng-container *ngIf="tab === 'pagos'">
+    <ion-list *ngIf="pagos.length; else noPagos">
+      <ion-item *ngFor="let p of currentPagos">
+        <ion-label>
+          <h3>{{ p.fecha | date:'dd/MM/yyyy' }}</h3>
+          <p>Clase: {{ p.clase }}</p>
+        </ion-label>
+        <ion-note slot="end">${{ p.monto | number:'1.0-0' }}</ion-note>
+      </ion-item>
+    </ion-list>
+    <ng-template #noPagos>
+      <p class="ion-text-center ion-margin-top">Aún no tienes pagos.</p>
+    </ng-template>
+
+    <!-- Paginación -->
+    <div class="pagination ion-padding">
+      <ion-button size="small" (click)="prevPage('pagos')" [disabled]="pagePagos===0">
+        Anterior
+      </ion-button>
+      <ion-button size="small" (click)="nextPage('pagos')" [disabled]="!hasMorePagos">
+        Siguiente
+      </ion-button>
+    </div>
+
+    <ion-button 
+      expand="block" 
+      class="ion-margin-top" 
+      (click)="solicitarRetiro()"
+      [disabled]="balance<=0"
+    >
+      Retirar dinero
+    </ion-button>
+  </ng-container>
+
+  <!-- Retiros con paginación -->
+<ng-container *ngIf="tab === 'retiros'">
+  <ion-list *ngIf="retiros.length; else noRetiros">
+    <ion-item *ngFor="let r of currentRetiros">
+      <ion-label>
+        <div class="retiro-fecha">
+          {{ r.fecha | date:'dd/MM/yyyy' }}
+          <span class="separator">|</span>
+          {{ r.fecha | date:'HH:mm' }}
+        </div>
+      </ion-label>
+      <ion-note slot="end">${{ r.monto | number:'1.0-0' }}</ion-note>
+    </ion-item>
+  </ion-list>
+  <ng-template #noRetiros>
+    <p class="ion-text-center ion-margin-top">Aún no has solicitado retiros.</p>
+  </ng-template>
+
+  <!-- Paginación -->
+  <div class="pagination">
+    <ion-button (click)="prevPage('retiros')" [disabled]="pageRetiros===0">
+      Anterior
+    </ion-button>
+    <ion-button (click)="nextPage('retiros')" [disabled]="!hasMoreRetiros">
+      Siguiente
+    </ion-button>
+  </div>
+</ng-container>
+
+
+
+</ion-content>

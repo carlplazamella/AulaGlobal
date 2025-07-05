@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Disponibilidad</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="disponibilidad.length > 0">
+    <ion-list>
+      <ion-item *ngFor="let bloque of disponibilidad">
+        <ion-label>
+          {{ bloque.fecha }}: {{ bloque.hora_inicio }} - {{ bloque.hora_fin }}
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div *ngIf="disponibilidad.length === 0" class="ion-text-center">
+    <p>No hay disponibilidad.</p>
+  </div>
+</ion-content>

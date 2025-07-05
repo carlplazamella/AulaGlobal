@@ -1,0 +1,93 @@
+/* registro.page.scss */
+
+/* Usa .page-container de global.scss para padding y centrado */
+.registro-container {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(161, 141, 203, 0.15);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Logo */
+.logo-login {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Título */
+.titulo-registro {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: var(--color-texto);
+}
+
+/* Ítems de formulario */
+.item-custom {
+  --background: #f8f6fc;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  --highlight-color-focused: var(--color-principal);
+}
+
+/* Contenedor RUT + DV en fila */
+.rut-dv-container {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  /* Cada uno ocupa la mitad */
+  ion-item {
+    flex: 1;
+  }
+}
+
+/* Ajuste específico para el input DV */
+.dv-item {
+  max-width: 80px;
+}
+
+/* Botón principal */
+.btn-login {
+  background: linear-gradient(
+    135deg,
+    var(--color-principal),
+    var(--color-principal-2)
+  ) !important;
+  color: #fff;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 12px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+}
+
+/* Spinner */
+.spinner-login {
+  width: 22px;
+  height: 22px;
+  margin: 0 auto;
+}
+
+/* Mensaje de error */
+.mensaje-error {
+  font-weight: 500;
+  margin: 12px 0;
+  text-align: center;
+}
+
+/* Texto secundario con link */
+.texto-secundario {
+  font-size: 0.95rem;
+  color: var(--color-texto);
+
+  a {
+    font-weight: bold;
+    color: var(--color-principal);
+    text-decoration: none;
+  }
+}

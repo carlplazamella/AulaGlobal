@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Califica tu clase</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="stars ion-text-center">
+    <ion-icon *ngFor="let n of [1,2,3,4,5]"
+              [name]="n <= estrellas ? 'star' : 'star-outline'"
+              size="large"
+              (click)="seleccionarEstrella(n)">
+    </ion-icon>
+  </div>
+  <ion-textarea
+    [(ngModel)]="comentario"
+    placeholder="Deja un comentario (opcional)">
+  </ion-textarea>
+  <ion-button
+    expand="full"
+    [disabled]="estrellas < 1"
+    (click)="enviar()">
+    Enviar
+  </ion-button>
+</ion-content>

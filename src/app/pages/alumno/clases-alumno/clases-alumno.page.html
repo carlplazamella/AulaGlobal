@@ -1,0 +1,56 @@
+<ion-content [fullscreen]="true" class="fondo-claro ion-padding">
+  <div class="contenedor">
+    <h1 class="titulo-motivador">Tus clases te esperan</h1>
+
+    <ion-spinner
+      *ngIf="cargando"
+      name="crescent"
+      class="spinner"
+    ></ion-spinner>
+
+    <p *ngIf="!cargando && reservas.length === 0" class="mensaje-vacio">
+      Aún no has reservado clases.
+    </p>
+
+    <div *ngFor="let r of reservas" class="tarjeta">
+      <div class="contenido">
+        <div class="materia">
+          <ion-icon name="book-outline" class="icono-info"></ion-icon>
+          {{ r.materia }} – {{ r.dificultad }}
+        </div>
+
+        <div class="profesor">
+          <ion-icon name="person-outline" class="icono-info"></ion-icon>
+          Profesor:   
+          <button
+            *ngIf="r.profesorId !== undefined"
+            fill="clear"
+            class="link-perfil"
+            (click)="verPerfilUsuario(r.profesorId!)"
+          >
+            {{ r.profesor }}
+          </button>
+        </div>
+
+        <div class="fecha">
+          <ion-icon name="calendar-outline" class="icono-info"></ion-icon>
+          {{ r.fechaBloque | date:'EEEE, d MMMM y':'':'es' }}
+        </div>
+
+        <div class="hora">
+          <ion-icon name="time-outline" class="icono-info"></ion-icon>
+          {{ r.horaInicio }} – {{ r.horaFin }}
+        </div>
+      </div>
+      <div class="boton-wrap">
+        <ion-button
+          size="small"
+          class="boton-reservar"
+          (click)="iniciarClase(r)"
+        >
+          Empezar clase
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

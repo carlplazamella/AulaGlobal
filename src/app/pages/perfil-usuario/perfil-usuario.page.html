@@ -1,0 +1,60 @@
+<ion-content class="perfil-content" *ngIf="usuario">
+
+  <button class="close-btn" (click)="cerrar()">×</button>
+
+  <div class="foto-contenedor">
+    <img
+      [src]="usuario.foto_perfil || 'assets/images/default-profile.png'"
+      alt="Foto de perfil"
+      class="foto-perfil-large"
+    />
+  </div>
+
+  <h2 class="nombre">
+    <strong>{{ usuario.nombre }} {{ usuario.apellido }}</strong>
+  </h2>
+  <p class="rut"><strong>RUT :</strong> {{ formattedRut }}</p>
+
+  <div class="valoracion">
+    <ng-container *ngFor="let _ of fullStars(promedio)">
+      <ion-icon name="star"></ion-icon>
+    </ng-container>
+    <ion-icon *ngIf="hasHalfStar(promedio)" name="star-half"></ion-icon>
+    <ng-container *ngFor="let _ of emptyStars(promedio)">
+      <ion-icon name="star-outline"></ion-icon>
+    </ng-container>
+    <span class="prom-text">{{ promedio | number:'1.1-1' }}</span>
+    <small>({{ total }} calificaciones)</small>
+  </div>
+
+  <div class="bio">
+    <h3>Biografía</h3>
+    <p>{{ usuario.descripcion }}</p>
+  </div>
+
+  <div *ngIf="comentarios.length > 0" class="comentarios">
+    <h3><strong>Comentarios</strong></h3>
+    <ion-card *ngFor="let c of comentarios" class="card-comentario">
+      <ion-card-content>
+        <div class="comentario-header">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          <span class="evaluador">{{ c.evaluadorNombre }}</span>
+          <span class="fecha">{{ c.fecha | date:'dd/MM/yy, HH:mm' }}</span>
+        </div>
+        <div class="comentario-estrellas">
+          <ng-container *ngFor="let _ of fullStars(c.estrellas)">
+            <ion-icon name="star"></ion-icon>
+          </ng-container>
+          <ion-icon *ngIf="hasHalfStar(c.estrellas)" name="star-half"></ion-icon>
+          <ng-container *ngFor="let _ of emptyStars(c.estrellas)">
+            <ion-icon name="star-outline"></ion-icon>
+          </ng-container>
+        </div>
+        <div class="comentario-body">
+          {{ c.comentario }}
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>

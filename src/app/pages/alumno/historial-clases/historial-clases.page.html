@@ -1,0 +1,28 @@
+<!-- src/app/pages/alumno/historial-clases/historial-clases.page.html -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="volver()">
+        <ion-icon slot="icon-only" [icon]="arrowBackOutline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Historial de Clases</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="historial.length; else sinHistorial">
+    <ion-item *ngFor="let c of historial">
+      <ion-icon slot="start" [icon]="timeOutline"></ion-icon>
+      <ion-label>
+        <h3>{{ c.materia }} – {{ c.dificultad }}</h3>
+        <p>{{ c.fechaBloque }} · {{ c.horaInicio }}-{{ c.horaFin }}</p>
+        <p class="sublinea">Profesor: {{ c.profesor }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ng-template #sinHistorial>
+    <p class="mensaje-vacio">No tienes historial de clases.</p>
+  </ng-template>
+</ion-content>

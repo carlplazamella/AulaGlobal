@@ -1,0 +1,91 @@
+<ion-content class="perfil-content">
+
+  <div class="volver-container">
+    <ion-button fill="clear" class="btn-volver" (click)="volver()">
+      <ion-icon slot="start" [icon]="arrowBackOutline"></ion-icon>
+      Volver
+    </ion-button>
+  </div>
+
+  <div class="foto-contenedor">
+    <img [src]="fotoPerfil" class="foto-perfil" />
+    <div class="icono-camara" *ngIf="editando" (click)="cambiarFoto()">
+      <ion-icon [icon]="camera"></ion-icon>
+    </div>
+  </div>
+
+  <div class="info-usuario">
+    <h2>{{ nombreUsuario }}</h2>
+    <p class="rut"><strong>{{ rut }}</strong></p>
+  </div>
+
+  <div class="valoracion-contenedor">
+    <ng-container *ngFor="let _ of fullStars">
+      <ion-icon [icon]="star" class="star-filled"></ion-icon>
+    </ng-container>
+    <ion-icon *ngIf="hasHalfStar" [icon]="starHalf" class="star-half"></ion-icon>
+    <ng-container *ngFor="let _ of emptyStars">
+      <ion-icon [icon]="starOutline" class="star-empty"></ion-icon>
+    </ng-container>
+    <span class="promedio">
+      {{ promedio.toFixed(1) }}
+      <small>{{ total }} calificaciones</small>
+    </span>
+  </div>
+
+  <div class="bio-box">
+    <h3 class="bio-title">Descripción</h3>
+    <ion-textarea
+      name="descripcion"
+      [(ngModel)]="descripcion"
+      [readonly]="!editando"
+      autoGrow
+      placeholder="Cuéntanos sobre ti..."
+      class="bio-textarea"
+    ></ion-textarea>
+  </div>
+
+  <div class="editar-btn-container">
+    <ion-button class="btn-editar" (click)="toggleEdicion()">
+      {{ editando ? 'Guardar Cambios' : 'Editar Perfil' }}
+    </ion-button>
+  </div>
+
+  <ng-container *ngIf="items.length > 0">
+    <h3 class="comentarios-titulo">Comentarios</h3>
+    <div class="lista-comentarios">
+      <ion-card *ngFor="let item of currentComentarios; trackBy: trackByIdx" class="card-comentario">
+        <div class="comentario-header">
+          <div class="avatar">
+            <ion-icon [icon]="personCircle"></ion-icon>
+          </div>
+          <div class="coment-info">
+            <div class="coment-nombre">{{ item.evaluadorNombre }}</div>
+            <div class="coment-fecha">{{ item.fecha | date:'dd/MM HH:mm':'':'es' }}</div>
+          </div>
+          <div class="coment-estrellas">
+            <ng-container *ngFor="let _ of estrellasArray(item.estrellas)">
+              <ion-icon [icon]="star"></ion-icon>
+            </ng-container>
+            <ng-container *ngFor="let _ of estrellasArray(5 - item.estrellas)">
+              <ion-icon [icon]="starOutline"></ion-icon>
+            </ng-container>
+          </div>
+        </div>
+        <div class="comentario-body">
+          <p>{{ item.comentario }}</p>
+        </div>
+      </ion-card>
+
+      <div class="pagination">
+        <ion-button size="small" *ngIf="pageComentarios > 0" (click)="prevPage()">
+          Anterior
+        </ion-button>
+        <ion-button size="small" *ngIf="hasMoreComentarios" (click)="nextPage()">
+          Siguiente
+        </ion-button>
+      </div>
+    </div>
+  </ng-container>
+
+</ion-content>

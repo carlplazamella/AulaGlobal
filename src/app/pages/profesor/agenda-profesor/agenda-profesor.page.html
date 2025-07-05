@@ -1,0 +1,72 @@
+<ion-content class="ion-padding agenda-profesor-content" fullscreen>
+
+  <div class="titulo-principal">
+    Ve tu calendario y crea nuevas clases.
+  </div>
+
+  <div class="ion-text-center ion-margin-bottom">
+    <ion-button class="btn-degradado" (click)="mostrarCalendario()">
+      Agendar una Clase
+    </ion-button>
+  </div>
+
+  <div *ngIf="calendarioVisible">
+    <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+    <div class="ion-text-center ion-margin-top">
+      <ion-button
+        class="btn-degradado"
+        (click)="abrirModalClase()"
+        *ngIf="diasSeleccionados.length > 0"
+      >
+        Crear Clase para los días seleccionados
+      </ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="groupedClases.length > 0">
+    <ion-card
+      *ngFor="let grupo of groupedClases"
+      class="card-clase-profesor ion-margin-bottom"
+    >
+      <ion-card-content>
+        <div class="titulo">
+          <ion-icon name="book-outline" class="icono-titulo"></ion-icon>
+          <span class="materia"
+            >{{ grupo.materia }} – Nivel {{ grupo.nivel }}</span
+          >
+        </div>
+        <div class="detalle">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span
+            >{{ grupo.fecha
+              | date: 'EEEE, d \'de\' MMMM yyyy' : '' : 'es' }}</span
+          >
+        </div>
+        <div class="detalle">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>Horarios:</span>
+          <ul class="lista-horarios">
+            <li *ngFor="let h of grupo.horarios">
+              {{ h.hora_inicio | slice: 0:5 }} a
+              {{ h.hora_fin | slice: 0:5 }}
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="grupo.estadoGrupo === 'RESERVADO'" class="reservado">
+          <ion-icon name="alert-circle-outline" color="danger"></ion-icon>
+          <span class="texto-reservado"
+            >Al menos un bloque ya está reservado</span
+          >
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div
+    *ngIf="groupedClases.length === 0"
+    class="ion-text-center sin-clases"
+  >
+    <p class="mensaje-vacio">No hay bloques registrados todavía.</p>
+  </div>
+
+</ion-content>

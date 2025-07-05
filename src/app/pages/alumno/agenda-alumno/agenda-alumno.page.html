@@ -1,0 +1,46 @@
+<ion-content [fullscreen]="true" class="fondo-claro ion-padding">
+  <div class="contenedor">
+    <h1 class="titulo-motivador">Encuentra tu próxima clase</h1>
+
+    <ion-searchbar
+      placeholder="Buscar por materia o profesor"
+      (ionInput)="filtrarClases($event)"
+      class="buscador"
+    ></ion-searchbar>
+
+    <div *ngIf="clasesFiltradas.length === 0" class="mensaje-vacio">
+      No se encontraron clases disponibles.
+    </div>
+
+    <div *ngFor="let grupo of clasesFiltradas" class="tarjeta">
+      <div class="info">
+        <div class="materia">
+          <ion-icon name="book-outline" class="icono-info"></ion-icon>
+          <span>{{ grupo.materia }} – Nivel {{ grupo.nivel }}</span>
+        </div>
+        <div class="profesor">
+          <ion-icon name="person-outline" class="icono-info"></ion-icon>
+          <span
+            class="clickable-text"
+            (click)="verPerfilProfesor(grupo.profesorUsuarioId)"
+          >
+            {{ grupo.profesor }}
+          </span>
+        </div>
+        <div class="valor">
+          <ion-icon name="cash-outline" class="icono-info"></ion-icon>
+          <span>{{ grupo.precio_hora | currency:'CLP':'symbol':'1.0-0' }}</span>
+        </div>
+      </div>
+      <div class="boton-wrap">
+        <ion-button
+          size="small"
+          class="boton-reservar"
+          (click)="abrirModalReserva(grupo)"
+        >
+          Reservar Clase
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

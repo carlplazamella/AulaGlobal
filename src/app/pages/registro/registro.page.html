@@ -1,0 +1,123 @@
+<!-- registro.page.html -->
+<ion-content>
+  <div class="page-container registro-container">
+    <div class="ion-text-center">
+      <img
+        src="assets/images/logo-aula-global.png"
+        alt="Logo Aula Global"
+        class="logo-login"
+      />
+    </div>
+
+    <h1 class="ion-text-center titulo-registro">Crea tu cuenta</h1>
+
+    <form (ngSubmit)="registrar()" #registroForm="ngForm" novalidate>
+      <ion-item class="item-custom">
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input
+          type="text"
+          [(ngModel)]="usuario.nombre"
+          name="nombre"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="item-custom">
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input
+          type="text"
+          [(ngModel)]="usuario.apellido"
+          name="apellido"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <div class="rut-dv-container">
+        <ion-item class="item-custom">
+          <ion-label position="floating">RUT</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="usuario.rut"
+            name="rut"
+            required
+            (ionChange)="formatearRut()"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="item-custom dv-item">
+          <ion-label position="floating">DV</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="usuario.dv"
+            name="dv"
+            required
+            maxlength="1"
+          ></ion-input>
+        </ion-item>
+      </div>
+
+      <ion-item class="item-custom">
+        <ion-label position="floating">Correo Electrónico</ion-label>
+        <ion-input
+          type="email"
+          [(ngModel)]="usuario.correo"
+          name="correo"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="item-custom">
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input
+          type="password"
+          [(ngModel)]="usuario.password"
+          name="password"
+          required
+          minlength="6"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="item-custom">
+        <ion-label position="floating">Repetir contraseña</ion-label>
+        <ion-input
+          type="password"
+          [(ngModel)]="confirmarPassword"
+          name="confirmarPassword"
+          required
+          [class.invalid]="usuario.password !== confirmarPassword"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="item-custom">
+        <ion-label position="floating">Tipo de usuario</ion-label>
+        <ion-select
+          [(ngModel)]="usuario.tipoUsuario"
+          name="tipoUsuario"
+          interface="popover"
+          required
+        >
+          <ion-select-option value="alumno">Alumno</ion-select-option>
+          <ion-select-option value="profesor">Profesor</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="errorMessage">
+        <p class="mensaje-error">{{ errorMessage }}</p>
+      </ion-text>
+
+      <ion-button
+        expand="block"
+        class="btn-login"
+        type="submit"
+        [disabled]="!registroForm.valid || usuario.password !== confirmarPassword || loading"
+      >
+        <ion-spinner *ngIf="loading" class="spinner-login"></ion-spinner>
+        <span *ngIf="!loading">Registrarse</span>
+      </ion-button>
+
+      <p class="texto-secundario ion-text-center ion-margin-top">
+        ¿Ya tienes una cuenta?
+        <a (click)="volver()">Inicia sesión</a>
+      </p>
+    </form>
+  </div>
+</ion-content>

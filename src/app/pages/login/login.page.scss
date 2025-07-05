@@ -1,0 +1,75 @@
+/* login.page.scss */
+
+/* Contenedor con padding centralizado (usa .page-container de global.scss) */
+.login-container {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(161, 141, 203, 0.15);
+
+  /* Asegura que crezca para pantallas muy pequeñas */
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Logo */
+.logo-login {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Título */
+.titulo-login {
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+  color: var(--color-texto);
+}
+
+/* Items de formulario */
+ion-item {
+  --background: #f8f6fc;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  --highlight-color-focused: var(--color-principal);
+}
+
+/* Asegura espaciado interno en inputs */
+ion-input {
+  padding: 12px 0;
+}
+
+/* Botón de login */
+.btn-login {
+  background: linear-gradient(
+    135deg,
+    var(--color-principal),
+    var(--color-principal-2)
+  ) !important;
+  color: #fff;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 12px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+}
+
+/* Spinner dentro del botón */
+.spinner-login {
+  width: 22px;
+  height: 22px;
+  margin: 0 auto;
+}
+
+/* Texto secundario */
+.texto-secundario {
+  font-size: 0.95rem;
+  color: var(--color-texto);
+
+  a {
+    font-weight: bold;
+    color: var(--color-principal);
+    text-decoration: none;
+  }
+}

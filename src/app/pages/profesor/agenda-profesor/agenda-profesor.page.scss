@@ -1,0 +1,103 @@
+/* src/app/pages/profesor/agenda-profesor/agenda-profesor.page.scss */
+
+/* Header fijo */
+ion-header {
+  --background: var(--color-principal);
+  color: #fff;
+}
+
+/* ion-content deja que gestione scroll */
+ion-content.agenda-profesor-content {
+  --background: var(--color-fondo);
+}
+
+/* Estilos visuales */
+.titulo-principal {
+  text-align: center;
+  color: var(--color-principal);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1rem 0;
+}
+
+.btn-degradado {
+  --background: var(--color-principal);
+  --color: #fff;
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+.card-clase-profesor {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  background-color: #fff;
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.icono-titulo {
+  margin-right: 8px;
+  color: var(--color-principal);
+}
+
+.detalle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #555;
+}
+.detalle ion-icon {
+  margin-right: 6px;
+  font-size: 18px;
+  color: var(--color-principal);
+}
+
+.lista-horarios {
+  margin: 4px 0 0 26px;
+  padding: 0;
+  list-style-type: disc;
+  color: #444;
+}
+
+.reservado {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  color: #d61c1c;
+  font-weight: 500;
+}
+.texto-reservado {
+  margin-left: 6px;
+}
+
+/* FullCalendar */
+.fc .fc-daygrid-day-events { max-height: 1.5rem; overflow: hidden; }
+.fc-event-dot { display: inline-block; width:8px; height:8px; border-radius:50%; margin:0 1px; }
+.fc-dot--available { background: var(--color-principal); }
+.fc-dot--reserved  { background: #d61c1c; }
+
+// Este fix soluciona el 90% de los problemas de scroll en Ionic+FullCalendar+Tabs+StandAlone
+ion-content {
+  contain: layout style;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  height: 100% !important;
+  max-height: 100vh !important;
+  touch-action: pan-y !important;
+}
+
+.agenda-profesor-content {
+  min-height: 100%;
+}
+
+html, body {
+  overscroll-behavior-y: contain;
+}

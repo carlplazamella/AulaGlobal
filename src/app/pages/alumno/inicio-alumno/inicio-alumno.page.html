@@ -1,0 +1,97 @@
+<ion-header class="header-wrapper">
+  <ion-toolbar class="header-curve">
+    <ion-buttons slot="start">
+      <ion-avatar (click)="irAPerfil()" class="avatar">
+        <img [src]="fotoPerfil" alt="Avatar" />
+      </ion-avatar>
+    </ion-buttons>
+
+    <div class="header-title">
+      <h1>Hola, {{ nombreUsuario }}</h1>
+      <p class="subtitulo">{{ tipoUsuario }}</p>
+    </div>
+
+    <ion-buttons slot="end" class="header-actions">
+      <ion-button fill="clear" (click)="irAPerfil()" aria-label="Editar perfil">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" (click)="cerrarSesion()" aria-label="Cerrar sesión">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding inicio-alumno-content">
+  <!-- Fecha actual y enlace a mis clases -->
+  <div class="fecha-bar">
+    <span class="fecha-text">{{ fechaActual }}</span>
+    <a (click)="verMisClases()" class="link-calendario">Ver mis clases</a>
+  </div>
+
+  <!-- Tarjeta de Próxima clase -->
+  <ion-card class="card-proxima-clase">
+    <ion-card-header>
+      <ion-card-subtitle>Próxima clase</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ng-container *ngIf="proximaClase.fecha; else sinClases">
+        <div class="linea">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span>{{ proximaClase.fecha | date:'EEEE, d \'de\' MMMM' }}</span>
+        </div>
+        <div class="linea">
+          <ion-icon name="ribbon-outline"></ion-icon>
+          <span>{{ proximaClase.materia }} – Nivel {{ proximaClase.nivel }}</span>
+        </div>
+        <div class="linea">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>{{ proximaClase.horaInicio }} – {{ proximaClase.horaFin }}</span>
+        </div>
+        <div class="linea">
+          <ion-icon name="person-outline"></ion-icon>
+          <span>{{ proximaClase.profesor }}</span>
+        </div>
+      </ng-container>
+      <ng-template #sinClases>
+        <p class="mensaje-vacio">Aún no tienes clases agendadas.</p>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Estadísticas semanales -->
+  <ion-card class="card-estadisticas">
+    <ion-card-content>
+      <div class="linea">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <span>Clases agendadas esta semana: {{ estadisticas.clasesSemana }}</span>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mis Clases -->
+  <ion-card button class="tarjeta-opcion" (click)="verMisClases()">
+    <ion-card-header>
+      <ion-card-subtitle>Mis Clases</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Gestiona tus reservas
+        <strong><u>aquí</u></strong>.
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Historial de Clases -->
+  <ion-card button class="tarjeta-opcion" (click)="verHistorialClases()">
+    <ion-card-header>
+      <ion-card-subtitle>Historial de Clases</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Revisa tus clases pasadas
+        <strong><u>aquí</u></strong>.
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

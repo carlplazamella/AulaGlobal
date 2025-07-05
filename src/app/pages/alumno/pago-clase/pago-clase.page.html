@@ -1,0 +1,59 @@
+<ion-content class="ion-padding">
+
+  <div class="titulo-principal">
+    <h1>Revisa y paga tu clase</h1>
+  </div>
+
+  <ion-card class="card-clase ion-margin">
+    <ion-card-content *ngIf="clase">
+
+      <div class="detalle">
+        <ion-icon name="book-outline"></ion-icon>
+        <span><strong>Materia:</strong> {{ clase.materia }} ({{ clase.nivel }})</span>
+      </div>
+
+      <div class="detalle">
+  <ion-icon name="calendar-outline"></ion-icon>
+  <span><strong>Fecha:</strong> {{ clase.fecha | date: 'dd-MM-yyyy' }}</span>
+</div>
+
+
+      <div class="detalle">
+        <ion-icon name="time-outline"></ion-icon>
+        <span><strong>Hora:</strong> {{ clase.horaInicio }} - {{ clase.horaFin }}</span>
+      </div>
+
+      <div class="detalle">
+        <ion-icon name="person-outline"></ion-icon>
+        <span><strong>Profesor:</strong> {{ clase.profesor }}</span>
+      </div>
+
+      <div class="detalle">
+        <ion-icon name="wallet-outline"></ion-icon>
+        <span><strong>Monto:</strong> {{ clase.monto | currency:'CLP':'symbol':'1.0-0' }}</span>
+      </div>
+
+      <div *ngIf="mensajePago" class="mensaje-exito">
+        <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+        <p>{{ mensajePago }}</p>
+      </div>
+
+      <div class="botones">
+        <ion-button expand="block" class="btn-degradado" (click)="pagar()">
+          Pagar ahora
+        </ion-button>
+
+        <ion-button expand="block" color="danger" fill="outline" (click)="cancelar()">
+          Cancelar reserva
+        </ion-button>
+
+        <ion-button expand="block" fill="clear" (click)="volver()">
+          <ion-icon name="return-down-back-outline" slot="start"></ion-icon>
+          Volver a cambiar día
+        </ion-button>
+      </div>
+      
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

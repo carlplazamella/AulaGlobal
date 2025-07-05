@@ -1,0 +1,49 @@
+<ion-content class="calificacion-content">
+  <div class="calificacion-header">
+    <h2>Califica tu clase</h2>
+    <p>Cuéntanos qué te pareció la experiencia y ayuda a otros usuarios con tu valoración.</p>
+  </div>
+
+  <!-- Formulario -->
+  <form [formGroup]="ratingForm" (ngSubmit)="enviar()" class="form-wrapper">
+    
+    <!-- Estrellas -->
+    <div class="estrellas">
+      <ng-container *ngFor="let i of [1,2,3,4,5]">
+        <ion-icon
+          [icon]="starIcon"
+          [class.filled]="i <= ratingForm.value.estrellas"
+          (click)="ratingForm.patchValue({ estrellas: i })"
+        ></ion-icon>
+      </ng-container>
+    </div>
+    
+    <div class="comentario-box">
+      <ion-textarea
+        placeholder="Escribe tu comentario"
+        rows="3"
+        formControlName="comentario"
+        autoGrow
+      ></ion-textarea>
+    </div>
+    <ion-text 
+      color="danger" 
+      *ngIf="ratingForm.get('comentario')?.invalid && ratingForm.get('comentario')?.touched"
+      class="error-text"
+    >
+      El comentario es obligatorio.
+    </ion-text>
+
+    <div class="boton-container">
+      <ion-button 
+        type="submit"
+        expand="block"
+        [disabled]="ratingForm.invalid"
+        class="btn-enviar"
+      >
+        <ion-icon slot="start" [icon]="checkIcon"></ion-icon>
+        Enviar
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

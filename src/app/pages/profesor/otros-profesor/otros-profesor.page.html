@@ -1,0 +1,31 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title class="main-title">Otras Opciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Botón Mis Pagos y Retiros -->
+  <ion-button
+    expand="block"
+    color="secondary"
+    class="btn-mis-pagos ion-margin-bottom"
+    (click)="goToMisPagos()"
+  >
+    <ion-icon [icon]="cardIcon" slot="start"></ion-icon>
+    Mis Pagos y Retiros
+  </ion-button>
+
+  <!-- Botón Cerrar Sesión -->
+  <ion-button 
+    expand="block" 
+    color="danger"
+    class="btn-cerrar-sesion"
+    (click)="logout()"
+  >
+    <ion-icon [icon]="logoutIcon" slot="start"></ion-icon>
+    Cerrar Sesión
+  </ion-button>
+
+</ion-content>

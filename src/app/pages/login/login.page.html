@@ -1,0 +1,53 @@
+<!-- login.page.html -->
+<ion-content>
+  <div class="page-container login-container">
+    <div class="ion-text-center">
+      <img
+        src="assets/images/logo-aula-global.png"
+        alt="Logo Aula Global"
+        class="logo-login"
+      />
+    </div>
+    <h1 class="ion-text-center titulo-login">Hola, bienvenido 👋🏻</h1>
+
+    <form (ngSubmit)="login()" novalidate>
+      <ion-item>
+        <ion-label position="floating">Correo Electrónico</ion-label>
+        <ion-input
+          type="email"
+          [(ngModel)]="credentials.correo"
+          name="correo"
+          required
+          inputmode="email"
+          autocomplete="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input
+          type="password"
+          [(ngModel)]="credentials.password"
+          name="password"
+          required
+          autocomplete="current-password"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button
+        expand="block"
+        type="submit"
+        class="btn-login"
+        [disabled]="loading"
+      >
+        <ion-spinner *ngIf="loading" class="spinner-login"></ion-spinner>
+        <span *ngIf="!loading">Iniciar Sesión</span>
+      </ion-button>
+    </form>
+
+    <p class="texto-secundario ion-text-center ion-margin-top">
+      ¿No tienes una cuenta?
+      <a (click)="irARegistro()">Regístrate</a>
+    </p>
+  </div>
+</ion-content>

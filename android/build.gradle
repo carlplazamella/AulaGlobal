@@ -1,0 +1,60 @@
+// android/build.gradle
+
+buildscript {
+    ext {
+        gradleAndroidPluginVersion       = '8.1.1'
+        compileSdkVersion                = 35
+        targetSdkVersion                 = 35
+        minSdkVersion                    = 22
+
+        androidxAppCompatVersion         = '1.6.1'
+        androidxCoordinatorLayoutVersion = '1.2.0'
+        coreSplashScreenVersion          = '1.0.0'
+        junitVersion                     = '4.13.2'
+        androidxJunitVersion             = '1.1.5'
+        androidxEspressoCoreVersion      = '3.5.1'
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$gradleAndroidPluginVersion"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// →→→ Forzamos Java 17 en TODOS los submódulos y tareas
+gradle.projectsEvaluated {
+    subprojects { subProj ->
+        if (subProj.plugins.hasPlugin('com.android.application') ||
+            subProj.plugins.hasPlugin('com.android.library')) {
+
+            subProj.android {
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_17
+                    targetCompatibility JavaVersion.VERSION_17
+                }
+            }
+
+            if (subProj.hasProperty("kotlinOptions")) {
+                subProj.kotlinOptions.jvmTarget = "17"
+            }
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

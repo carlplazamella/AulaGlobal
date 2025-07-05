@@ -1,0 +1,86 @@
+/* estilos para el modal de calificación */
+
+.calificacion-content {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  background: #f5f7fa;
+}
+
+.calificacion-header {
+  text-align: center;
+  margin: 24px 0 16px;
+
+  h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #1b7161;
+    font-weight: bold;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: #555;
+    font-size: 1rem;
+  }
+}
+
+.form-wrapper {
+  max-width: 500px;
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+
+.estrellas {
+  text-align: center;
+  margin: 1.5rem 0;
+
+  ion-icon {
+    font-size: 2.5rem;
+    padding: 0.25rem;
+    transition: transform 0.15s ease, color 0.15s ease;
+    color: #ccc;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+    &.filled {
+      color: #f5b50a;
+      transform: scale(1.2);
+    }
+  }
+}
+
+.comentario-box {
+  background: #e6ece7;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 8px;
+
+  ion-textarea {
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #444;
+  }
+}
+
+.error-text {
+  margin-left: 4px;
+  font-size: 0.85rem;
+}
+
+.boton-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.btn-enviar {
+  width: 50%;
+  background: #1b7161;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 8px;
+}
