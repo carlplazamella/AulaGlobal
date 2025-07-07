@@ -170,7 +170,7 @@ export const routes: Routes = [
   },
 
   // wildcard
-  { path: '**', redirectTo: 'login' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
   
 ];
 

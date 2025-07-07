@@ -1,33 +1,41 @@
-import { Component }      from '@angular/core';
-import { CommonModule }   from '@angular/common';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import {
   IonTabs,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonIcon,
-  IonLabel
+  IonLabel,
 } from '@ionic/angular/standalone';
-import { addIcons }       from 'ionicons';
-import { home, calendar, notifications, book } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
+import {
+  home,
+  calendar,
+  notifications,
+  book,
+  ellipsisHorizontal,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-tabs-profesor',
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,           // ← IMPORTANTE: para que routerLink funcione
     IonTabs,
     IonRouterOutlet,
     IonTabBar,
     IonTabButton,
     IonIcon,
-    IonLabel
+    IonLabel,
   ],
   templateUrl: './tabs-profesor.component.html',
-  styleUrls: ['./tabs-profesor.component.scss']
+  styleUrls: ['./tabs-profesor.component.scss'],
 })
 export class TabsProfesorComponent {
   constructor() {
-    addIcons({ home, calendar, notifications, book });
+    addIcons({ home, calendar, notifications, book, ellipsisHorizontal });
   }
 }
