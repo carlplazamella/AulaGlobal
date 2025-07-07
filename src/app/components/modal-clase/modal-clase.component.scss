@@ -67,6 +67,7 @@ ion-text[color="danger"] {
   margin-bottom: 8px;
 }
 
+/* Estilos base del popover personalizado */
 .mi-popover-select {
   --width: 260px;
   --min-height: 200px;
@@ -89,13 +90,34 @@ ion-text[color="danger"] {
   }
 
   ion-item:hover {
-    background: rgba(165, 214, 167, 0.2); 
+    background: rgba(165, 214, 167, 0.2);
   }
 
   ion-label {
     color: var(--color-principal);
     font-weight: 500;
   }
+}
+
+/* ============================================= */
+/* A partir de aquí, reglas para elevar y permitir scroll en el popover */
+
+/* Forzar que el popover se muestre por encima del modal */
+.mi-popover-select {
+  --width: 90vw !important;
+  --max-height: 80vh !important;
+  --z-index: 10000 !important;
+}
+
+/* Asegurarnos de que el contenedor del popover no oculte su contenido */
+.popover-wrapper {
+  overflow: visible !important;
+}
+
+/* Habilitar scroll interno si la lista es muy larga */
+.popover-content {
+  overflow-y: auto !important;
+  max-height: 80vh !important;
 }
 
 @media (max-width: 360px) {

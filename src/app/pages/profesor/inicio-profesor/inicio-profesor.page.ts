@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-
-
 import {
   IonHeader,
   IonToolbar,
@@ -67,8 +65,12 @@ export class InicioProfesorPage {
 
   constructor(
     private router: Router,
-    private clasesSvc: ClasesService
-  ) {}
+    private clasesSvc: ClasesService,
+    el: ElementRef
+  ) {
+    // ← ¡Agrega la clase ion-page para el layout!
+    el.nativeElement.classList.add('ion-page');
+  }
 
   ionViewWillEnter(): void {
     this.calcularFechaActual();

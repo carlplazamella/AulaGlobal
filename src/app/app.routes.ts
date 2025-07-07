@@ -171,6 +171,7 @@ export const routes: Routes = [
 
   // wildcard
   { path: '**', redirectTo: 'login' },
+  
 ];
 
 @NgModule({

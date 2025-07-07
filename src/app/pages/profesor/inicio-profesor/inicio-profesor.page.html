@@ -1,34 +1,33 @@
-<!-- src/app/pages/profesor/inicio-profesor/inicio-profesor.page.html -->
-<ion-header>
-  <ion-toolbar color="primary">
+<ion-header slot="fixed" class="header-wrapper">
+  <ion-toolbar class="header-curve">
     <ion-buttons slot="start">
       <ion-avatar (click)="irAPerfil()" class="avatar">
         <img [src]="fotoPerfil" alt="Avatar" />
       </ion-avatar>
     </ion-buttons>
 
-    <ion-title>
-      Hola, {{ nombreUsuario }}
-      <div class="subtitulo">{{ tipoUsuario }}</div>
-    </ion-title>
+    <div class="header-title">
+      <h1>Hola, {{ nombreUsuario }}</h1>
+      <p class="subtitulo">{{ tipoUsuario }}</p>
+    </div>
 
-    <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="irAPerfil()" aria-label="Editar perfil">
+    <ion-buttons slot="end" class="header-actions">
+      <ion-button tappable fill="clear" (click)="irAPerfil()" aria-label="Editar perfil">
         <ion-icon name="create-outline"></ion-icon>
       </ion-button>
-      <ion-button fill="clear" (click)="cerrarSesion()" aria-label="Cerrar sesión">
+      <ion-button tappable fill="clear" (click)="cerrarSesion()" aria-label="Cerrar sesión">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="inicio-profesor-content">
+<ion-content fullscreen class="ion-padding inicio-profesor-content">
   <div class="page-container">
     <!-- Fecha actual y enlace -->
     <div class="fecha-bar">
       <span class="fecha-text">{{ fechaActual }}</span>
-      <a (click)="verClasesAgendadas()" class="link-calendario">
+      <a tappable (click)="verClasesAgendadas()" class="link-calendario">
         Ver clases agendadas
       </a>
     </div>
@@ -90,7 +89,7 @@
       </ion-card-header>
       <ion-card-content>
         Revisa tus clases pasadas
-        <a (click)="verHistorialClases()" class="link-aqui"><strong><u>aquí</u></strong></a>.
+        <a tappable (click)="verHistorialClases()" class="link-aqui"><strong><u>aquí</u></strong></a>.
       </ion-card-content>
     </ion-card>
   </div>

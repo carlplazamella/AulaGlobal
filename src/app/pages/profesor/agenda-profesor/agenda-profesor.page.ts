@@ -1,17 +1,19 @@
-// src/app/pages/profesor/agenda-profesor/agenda-profesor.page.ts
-
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { CommonModule, NgIf, NgForOf } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { FullCalendarModule, FullCalendarComponent } from '@fullcalendar/angular';
+import {
+  FullCalendarModule,
+  FullCalendarComponent
+} from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
-import { CalendarOptions } from '@fullcalendar/core';
+import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import { environment } from 'src/environments/environment';
 import { ModalClaseComponent } from 'src/app/components/modal-clase/modal-clase.component';
 import { AuthService } from 'src/app/services/auth.service';
 
+import { IonicModule } from '@ionic/angular';
 import {
   IonHeader,
   IonToolbar,
@@ -61,6 +63,7 @@ interface Grupo {
     HttpClientModule,
     FullCalendarModule,
     ModalClaseComponent,
+    IonicModule,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -73,7 +76,7 @@ interface Grupo {
   templateUrl: './agenda-profesor.page.html',
   styleUrls: ['./agenda-profesor.page.scss']
 })
-export class AgendaProfesorPage {
+export class AgendaProfesorPage implements OnInit {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
   calendarioVisible = false;
@@ -90,14 +93,9 @@ export class AgendaProfesorPage {
     plugins: [dayGridPlugin, interactionPlugin],
     initialView: 'dayGridMonth',
     locale: esLocale,
-    eventDisplay: 'block',
-    eventContent: arg => ({
-      html: `<span class="fc-event-dot ${
-        arg.event.extendedProps['estado_bloque'] === 'RESERVADO'
-          ? 'fc-dot--reserved'
-          : 'fc-dot--available'
-      }"></span>`
-    }),
+    timeZone: 'local',
+    height: 'auto',
+    eventDisplay: 'list-item',
     dateClick: this.onDateClick.bind(this),
     eventClick: this.onEventClick.bind(this),
     validRange: { start: new Date().toISOString().split('T')[0] },
@@ -108,7 +106,8 @@ export class AgendaProfesorPage {
     private authService: AuthService,
     private http: HttpClient,
     private modalCtrl: ModalController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    el: ElementRef
   ) {
     addIcons({
       bookOutline,
@@ -116,25 +115,28 @@ export class AgendaProfesorPage {
       timeOutline,
       alertCircleOutline
     });
+    // ← ¡Agrega la clase ion-page!
+    el.nativeElement.classList.add('ion-page');
   }
 
-  ionViewWillEnter() {
+  ngOnInit() {
     this.obtenerBloquesProfesor();
   }
 
   mostrarCalendario() {
     this.calendarioVisible = true;
-    setTimeout(() => this.obtenerBloquesProfesor(), 300);
+    setTimeout(() => this.actualizarEventosCalendario(), 100);
   }
 
   private obtenerBloquesProfesor() {
     const profId = this.authService.obtenerIdUsuario();
-    if (profId == null) return;
+    if (!profId) return;
 
-    this.http.get<any[]>(`${environment.apiUrl}/clases/bloques/${profId}`)
+    this.http
+      .get<Bloque[]>(`${environment.apiUrl}/clases/bloques/${profId}`)
       .subscribe({
         next: raw => {
-          const bloques = raw.map(b => ({
+          let bloques = raw.map(b => ({
             bloque_id: b.bloque_id,
             fecha: new Date(b.fecha),
             hora_inicio: b.hora_inicio,
@@ -142,7 +144,11 @@ export class AgendaProfesorPage {
             estado_bloque: b.estado_bloque,
             materia: b.materia,
             nivel: b.nivel
-          })) as Bloque[];
+          }));
+
+          bloques = bloques.filter(
+            (b, i, a) => a.findIndex(x => x.bloque_id === b.bloque_id) === i
+          );
 
           const ahora = new Date();
           this.clasesAgendadas = bloques.filter(b => {
@@ -152,8 +158,13 @@ export class AgendaProfesorPage {
             return fin >= ahora;
           });
 
-          this.groupedClases = this.agruparPorFechaMateriaNivel(this.clasesAgendadas);
-          setTimeout(() => this.actualizarEventosCalendario(), 100);
+          this.groupedClases = this.agruparPorFechaMateriaNivel(
+            this.clasesAgendadas
+          );
+
+          if (this.calendarioVisible) {
+            setTimeout(() => this.actualizarEventosCalendario(), 100);
+          }
         },
         error: err => console.error('Error al obtener bloques:', err)
       });
@@ -177,39 +188,33 @@ export class AgendaProfesorPage {
       grp.horarios.push({ hora_inicio: b.hora_inicio, hora_fin: b.hora_fin });
       if (b.estado_bloque === 'RESERVADO') grp.estadoGrupo = 'RESERVADO';
     });
-    return Array.from(mapa.values()).sort((a, b) => a.fecha.getTime() - b.fecha.getTime());
+    return Array.from(mapa.values()).sort(
+      (a, b) => a.fecha.getTime() - b.fecha.getTime()
+    );
   }
 
   private actualizarEventosCalendario() {
     if (!this.calendarioVisible) return;
-    const api = this.calendarComponent.getApi();
-    api.removeAllEvents();
+
+    const events: EventInput[] = [];
+    const vistos = new Set<string>();
+
     this.clasesAgendadas.forEach(b => {
       const iso = b.fecha.toISOString().split('T')[0];
-      api.addEvent({
-        id: `bloque-${b.bloque_id}`,
-        title: '',
-        start: `${iso}T${b.hora_inicio}`,
-        end: `${iso}T${b.hora_fin}`,
-        backgroundColor: b.estado_bloque === 'RESERVADO'
-          ? '#d61c1c'
-          : 'var(--color-principal)',
-        borderColor: b.estado_bloque === 'RESERVADO'
-          ? '#d61c1c'
-          : 'var(--color-principal)',
-        extendedProps: { estado_bloque: b.estado_bloque }
-      });
+      if (!vistos.has(iso)) {
+        vistos.add(iso);
+        events.push({
+          id: iso,
+          title: '',
+          start: b.fecha,
+          allDay: true
+        });
+      }
     });
-    this.diasSeleccionados.forEach(fecha => {
-      api.addEvent({
-        id: fecha,
-        title: '',
-        start: fecha,
-        allDay: true,
-        backgroundColor: 'var(--color-principal)',
-        borderColor: 'var(--color-principal)'
-      });
-    });
+
+    const api = this.calendarComponent.getApi();
+    api.removeAllEvents();
+    api.addEventSource(events);
   }
 
   onDateClick(info: any) {
@@ -217,6 +222,7 @@ export class AgendaProfesorPage {
     const hoy = new Date().toISOString().split('T')[0];
     if (fecha < hoy) return;
     const api = this.calendarComponent.getApi();
+
     if (this.diasSeleccionados.includes(fecha)) {
       this.diasSeleccionados = this.diasSeleccionados.filter(d => d !== fecha);
       api.getEventById(fecha)?.remove();
@@ -225,10 +231,12 @@ export class AgendaProfesorPage {
       api.addEvent({
         id: fecha,
         title: '',
-        start: fecha,
-        allDay: true,
-        backgroundColor: 'var(--color-principal)',
-        borderColor: 'var(--color-principal)'
+        start: new Date(
+          +fecha.split('-')[0],
+          +fecha.split('-')[1] - 1,
+          +fecha.split('-')[2]
+        ),
+        allDay: true
       });
     }
   }
@@ -253,25 +261,34 @@ export class AgendaProfesorPage {
     if (!id.startsWith('bloque-')) return;
     const bloqueId = +id.replace('bloque-', '');
     if (confirm('¿Eliminar este bloque?')) {
-      this.http.delete(`${environment.apiUrl}/clases/bloque/${bloqueId}`)
-        .subscribe(() => this.obtenerBloquesProfesor(), e => console.error(e));
+      this.http
+        .delete(`${environment.apiUrl}/clases/bloque/${bloqueId}`)
+        .subscribe(
+          () => this.obtenerBloquesProfesor(),
+          e => console.error(e)
+        );
     }
   }
 
   eliminarGrupo(grupo: Grupo) {
     const clave = grupo.fecha.toISOString().split('T')[0];
-    const aEliminar = this.clasesAgendadas.filter(b =>
-      b.fecha.toISOString().split('T')[0] === clave &&
-      b.materia === grupo.materia &&
-      b.nivel === grupo.nivel
+    const aEliminar = this.clasesAgendadas.filter(
+      b =>
+        b.fecha.toISOString().split('T')[0] === clave &&
+        b.materia === grupo.materia &&
+        b.nivel === grupo.nivel
     );
     let cont = 0;
     aEliminar.forEach(b => {
-      this.http.delete(`${environment.apiUrl}/clases/bloque/${b.bloque_id}`)
-        .subscribe(() => {
-          cont++;
-          if (cont === aEliminar.length) this.obtenerBloquesProfesor();
-        }, e => console.error(e));
+      this.http
+        .delete(`${environment.apiUrl}/clases/bloque/${b.bloque_id}`)
+        .subscribe(
+          () => {
+            cont++;
+            if (cont === aEliminar.length) this.obtenerBloquesProfesor();
+          },
+          e => console.error(e)
+        );
     });
   }
 }

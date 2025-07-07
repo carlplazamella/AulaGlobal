@@ -1,4 +1,4 @@
-import { Component }    from '@angular/core';
+import { Component, ElementRef }    from '@angular/core';
 import { IonicModule }  from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
@@ -10,5 +10,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./notificaciones-profesor.page.scss']
 })
 export class NotificacionesProfesorPage {
+  constructor(el: ElementRef) {
+    el.nativeElement.classList.add('ion-page');
+  }
   // Puedes implementar lógica de notificaciones aquí más adelante
 }

@@ -1,3 +1,34 @@
+/* ========== SCSS CLASES-PROFESOR ========== */
+
+/* 1. Forzar el flex y height desde el host hasta el contenido */
+:host,
+:host-context(ion-router-outlet),
+:host-context(ion-tabs),
+:host-context(app-tabs-profesor),
+:host-context(.ion-page) {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+/* 2. Asegurar ion-header y ion-content ocupan espacio correctamente */
+ion-header {
+  flex-shrink: 0 !important;
+  z-index: 2;
+}
+
+ion-content {
+  flex: 1 1 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  --background: #f5f6fa;
+}
+
+/* ========== ESTILOS ORIGINALES ========== */
 
 .titulo-motivador {
   text-align: center;
@@ -46,8 +77,8 @@
 .btn-degradado {
   display: block;
   width: 70%;
-  max-width: 220px;  
-  margin: 0 auto;   
+  max-width: 220px;
+  margin: 0 auto;
   --background: linear-gradient(to right, var(--color-principal), #A5D6A7);
   --color: #fff;
   --border-radius: 14px;
@@ -59,7 +90,6 @@
   --background: transparent !important;
   box-shadow: none !important;
   outline: none !important;
-
   color: var(--color-principal) !important;
   font-weight: bold;
   text-decoration: underline;

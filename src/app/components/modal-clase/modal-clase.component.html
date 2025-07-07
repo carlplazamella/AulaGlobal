@@ -1,6 +1,5 @@
-<!-- src/app/components/modal-clase/modal-clase.component.html -->
-
 <ion-content>
+  <!-- Botón cerrar -->
   <ion-button class="boton-cerrar" (click)="cerrar()" fill="clear">
     ✕
   </ion-button>
@@ -8,46 +7,43 @@
   <form [formGroup]="formulario" (ngSubmit)="guardar()">
     <ion-list lines="none">
 
+      <!-- MATERIA usando action-sheet -->
       <ion-item>
         <ion-label position="floating">Materia</ion-label>
         <ion-select
           formControlName="materia"
-          interface="popover"
-          [interfaceOptions]="{ cssClass: 'mi-popover-select' }"
+          interface="action-sheet"
+          [interfaceOptions]="{ header: 'Selecciona materia' }"
           class="mi-dropdown"
         >
-          <ion-select-option
-            *ngFor="let m of materias"
-            [value]="m.id"
-          >
+          <ion-select-option *ngFor="let m of materias" [value]="m.id">
             {{ m.nombre }}
           </ion-select-option>
         </ion-select>
       </ion-item>
 
+      <!-- NIVEL usando action-sheet -->
       <ion-item>
         <ion-label position="floating">Nivel</ion-label>
         <ion-select
           formControlName="nivel"
-          interface="popover"
-          [interfaceOptions]="{ cssClass: 'mi-popover-select' }"
+          interface="action-sheet"
+          [interfaceOptions]="{ header: 'Selecciona nivel' }"
           class="mi-dropdown"
         >
-          <ion-select-option
-            *ngFor="let n of niveles"
-            [value]="n.id"
-          >
+          <ion-select-option *ngFor="let n of niveles" [value]="n.id">
             {{ n.nombre }}
           </ion-select-option>
         </ion-select>
       </ion-item>
 
+      <!-- HORA DE INICIO usando action-sheet -->
       <ion-item>
         <ion-label position="floating">Hora de inicio</ion-label>
         <ion-select
           formControlName="horaInicio"
-          interface="popover"
-          [interfaceOptions]="{ cssClass: 'mi-popover-select' }"
+          interface="action-sheet"
+          [interfaceOptions]="{ header: 'Selecciona hora de inicio' }"
           class="mi-dropdown"
         >
           <ion-select-option *ngFor="let h of horas" [value]="h">
@@ -56,36 +52,34 @@
         </ion-select>
       </ion-item>
 
+      <!-- HORA DE FIN usando action-sheet -->
       <ion-item>
         <ion-label position="floating">Hora de fin</ion-label>
         <ion-select
           formControlName="horaFin"
-          interface="popover"
-          [interfaceOptions]="{ cssClass: 'mi-popover-select' }"
+          interface="action-sheet"
+          [interfaceOptions]="{ header: 'Selecciona hora de fin' }"
           class="mi-dropdown"
         >
-          <ion-select-option
-            *ngFor="let h of obtenerHorasFin()"
-            [value]="h"
-          >
+          <ion-select-option *ngFor="let h of obtenerHorasFin()" [value]="h">
             {{ h }}
           </ion-select-option>
         </ion-select>
       </ion-item>
 
+      <!-- Mensaje duración insuficiente -->
       <ion-text color="danger" class="ion-padding-start"
                 *ngIf="duration !== null && duration < 4">
         La clase debe durar al menos 4 horas (tienes {{ duration }} h).
       </ion-text>
 
+      <!-- VALOR -->
       <ion-item>
         <ion-label position="floating">Valor</ion-label>
-        <ion-input
-          type="number"
-          formControlName="precioHora"
-        ></ion-input>
+        <ion-input type="number" formControlName="precioHora"></ion-input>
       </ion-item>
 
+      <!-- DESCRIPCIÓN -->
       <ion-item>
         <ion-label position="floating">Descripción (opcional)</ion-label>
         <ion-textarea formControlName="descripcion"></ion-textarea>

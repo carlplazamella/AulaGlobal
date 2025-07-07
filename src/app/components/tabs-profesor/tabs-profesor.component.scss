@@ -1,0 +1,15 @@
+ion-tabs {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100vh !important;
+  min-height: 0 !important;
+  flex: 1 1 0 !important;
+}
+ion-router-outlet[tabs] {
+  flex: 1 1 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+}

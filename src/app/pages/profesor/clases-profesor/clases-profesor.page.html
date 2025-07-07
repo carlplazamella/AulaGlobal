@@ -1,51 +1,62 @@
+<!-- src/app/pages/profesor/clases-profesor/clases-profesor.page.html -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mis Clases</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="ion-padding">
+
   <h2 class="titulo-motivador">Revisa tus clases agendadas.</h2>
 
-  <ion-spinner *ngIf="cargando" name="crescent" class="ion-margin-top"></ion-spinner>
+  <ion-spinner 
+    *ngIf="cargando" 
+    name="crescent" 
+    class="ion-margin-top">
+  </ion-spinner>
 
-  <p *ngIf="!cargando && reservas.length === 0"
-     class="mensaje-vacio ion-text-center">
+  <p 
+    *ngIf="!cargando && reservas.length === 0"
+    class="mensaje-vacio ion-text-center">
     Aún no tienes clases agendadas.
   </p>
 
   <div *ngIf="!cargando && reservas.length > 0">
-    <ion-card *ngFor="let r of reservas" class="card-clase-profesor">
+    <ion-card 
+      *ngFor="let r of reservas" 
+      class="card-clase-profesor ion-margin-bottom"
+    >
       <ion-card-content>
 
         <div class="titulo">
           <ion-icon name="book-outline" class="icono-titulo"></ion-icon>
-          <span class="materia">{{ r.materia }} – Nivel {{ r.dificultad }}</span>
+          {{ r.materia }} – Nivel {{ r.dificultad }}
         </div>
 
         <div class="detalle">
           <ion-icon name="calendar-outline"></ion-icon>
-          <span>{{ r.fechaBloque | date:'fullDate':'':'es' }}</span>
+          {{ r.fechaBloque | date:'fullDate':'':'es' }}
         </div>
 
         <div class="detalle">
           <ion-icon name="time-outline"></ion-icon>
-          <span>{{ r.horaInicio }} – {{ r.horaFin }}</span>
+          {{ r.horaInicio }} – {{ r.horaFin }}
         </div>
 
         <div class="detalle" *ngIf="r.alumno">
           <ion-icon name="person-outline"></ion-icon>
-          <span
-            class="clickable-text"
-            (click)="verPerfilAlumno(r.alumnoId)"
-          >
+          <span class="clickable-text" (click)="verPerfilAlumno(r.alumnoId)">
             {{ r.alumno }}
           </span>
         </div>
 
-        <ion-button
-          expand="block"
-          class="btn-degradado"
-          (click)="iniciarClase(r)"
-        >
+        <ion-button expand="block" class="btn-degradado" (click)="iniciarClase(r)">
           Empezar Clase
         </ion-button>
 
       </ion-card-content>
     </ion-card>
   </div>
+
 </ion-content>

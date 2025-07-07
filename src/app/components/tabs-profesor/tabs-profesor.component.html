@@ -1,28 +1,21 @@
-<ion-tabs>
-
-  <!-- Este outlet inyecta la página activa -->
-  <ion-router-outlet></ion-router-outlet>
-
+<ion-tabs style="height: 100vh; display: flex; flex-direction: column;">
+  <ion-router-outlet tabs="true" style="flex: 1 1 0;"></ion-router-outlet>
   <ion-tab-bar slot="bottom" color="primary">
     <ion-tab-button tab="inicio-profesor" href="/profesor/inicio-profesor">
       <ion-icon name="home"></ion-icon>
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
-
     <ion-tab-button tab="agenda-profesor" href="/profesor/agenda-profesor">
       <ion-icon name="calendar"></ion-icon>
       <ion-label>Agenda</ion-label>
     </ion-tab-button>
-
     <ion-tab-button tab="notificaciones-profesor" href="/profesor/notificaciones-profesor">
       <ion-icon name="notifications"></ion-icon>
       <ion-label>Notificaciones</ion-label>
     </ion-tab-button>
-
     <ion-tab-button tab="clases-profesor" href="/profesor/clases-profesor">
       <ion-icon name="book"></ion-icon>
       <ion-label>Clases</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-
 </ion-tabs>
